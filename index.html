@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickBite | Food Ordering</title>
+  <style>
+    :root {
+      --primary: #ff5722;
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
+
+    /* 1. Flexbox Navbar */
+    .navbar {
+      display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+      gap: 0.75rem; padding: 1rem 5%; background: var(--card);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 10;
+    }
+    .brand { font-size: clamp(1.3rem, 2.5vw, 1.7rem); font-weight: 800; color: var(--primary); text-decoration: none; }
+    .nav-links { display: flex; flex-wrap: wrap; list-style: none; gap: clamp(0.8rem, 2vw, 1.8rem); }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; }
+    .nav-links a:hover { color: var(--primary); }
+    .btn { background: var(--primary); color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; cursor: pointer; }
+
+    /* Container & Hero */
+    .container { width: min(1200px, 92%); margin: 0 auto; padding: clamp(1rem, 3vw, 2rem) 0; }
+    .hero {
+      background: linear-gradient(135deg, #ff5722, #ff8a65); color: #fff;
+      padding: clamp(1.5rem, 3vw, 2.5rem); border-radius: 14px; text-align: center; margin-bottom: 1.5rem;
+    }
+    .hero h1 { font-size: clamp(1.4rem, 3.5vw, 2.2rem); margin-bottom: 0.4rem; }
+
+    /* Categories (Flexbox) */
+    .categories { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2rem; }
+    .chip { background: var(--card); border: 1px solid #ddd; padding: 0.45rem 1rem; border-radius: 99px; font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+    .chip:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* 2. CSS Grid (6 Restaurant Cards) */
+    .grid { display: grid; grid-template-columns: 1fr; gap: clamp(1rem, 2.5vw, 1.5rem); }
+    .card-wrap { container-type: inline-size; container-name: card; }
+    .card {
+      background: var(--card); border-radius: 12px; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06); display: flex; flex-direction: column; height: 100%;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+    .banner {
+      height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 2.5rem;
+    }
+    .banner span { font-size: 0.75rem; background: rgba(0,0,0,0.25); padding: 0.2rem 0.6rem; border-radius: 99px; margin-top: 0.3rem; }
+    .body { padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; gap: 0.6rem; }
+    .top { display: flex; justify-content: space-between; align-items: center; }
+    .rating { background: #16a34a; color: #fff; font-size: 0.8rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 6px; }
+    .menu { background: #f9fafb; border: 1px dashed #ccc; padding: 0.5rem; border-radius: 6px; font-size: 0.82rem; color: var(--muted); }
+    .foot { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; color: var(--muted); border-top: 1px solid #eee; padding-top: 0.6rem; }
+
+    /* 3. Container Queries & Media Queries */
+    @container card (min-width: 450px) {
+      .card { flex-direction: row; }
+      .banner { width: 35%; height: auto; }
+    }
+    @media (min-width: 640px) {
+      .navbar { flex-direction: row; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 960px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <a href="#" class="brand">QuickBite</a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#cats">Categories</a></li>
+      <li><a href="#rest">Restaurants</a></li>
+      <li><a href="#rest">Menus</a></li>
+    </ul>
+    <button class="btn">Cart (2)</button>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Explore Restaurants & Order Fresh Food</h1>
+      <p>Browse food categories, check menus, and order fast delivery.</p>
+    </section>
+
+    <section id="cats" class="categories">
+      <span class="chip">🍕 Pizza</span>
+      <span class="chip">🍔 Burgers</span>
+      <span class="chip">🍛 Biryani</span>
+      <span class="chip">🍣 Sushi</span>
+      <span class="chip">🥗 Healthy</span>
+      <span class="chip">🍰 Desserts</span>
+    </section>
+
+    <section id="rest">
+      <h2 style="margin-bottom: 1rem;">Popular Restaurants & Menus</h2>
+      <div class="grid">
+
+        <div class="card-wrap">
+          <article class="card">
+            <div class="banner" style="background: #e53935;">🍕<span>20% OFF</span></div>
+            <div class="body">
+              <div class="top"><h3>Bella Napoli Pizza</h3><span class="rating">4.8 ★</span></div>
+              <div class="menu">Menu: Margherita ($11) • Pepperoni ($14)</div>
+              <div class="foot"><span>25–30 mins</span><span style="color:var(--primary)">Order →</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="card-wrap">
+          <article class="card">
+            <div class="banner" style="background: #f57c00;">🍔<span>FREE DELIVERY</span></div>
+            <div class="body">
+              <div class="top"><h3>The Smash Shack</h3><span class="rating">4.6 ★</span></div>
+              <div class="menu">Menu: Cheese Smash ($9) • Peri Fries ($5)</div>
+              <div class="foot"><span>20–25 mins</span><span style="color:var(--primary)">Order →</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="card-wrap">
+          <article class="card">
+            <div class="banner" style="background: #d84315;">🍛<span>BESTSELLER</span></div>
+            <div class="body">
+              <div class="top"><h3>Spice Route Kitchen</h3><span class="rating">4.9 ★</span></div>
+              <div class="menu">Menu: Paneer Tikka ($12) • Dum Biryani ($13)</div>
+              <div class="foot"><span>30–40 mins</span><span style="color:var(--primary)">Order →</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="card-wrap">
+          <article class="card">
+            <div class="banner" style="background: #00897b;">🍣<span>FRESH DAILY</span></div>
+            <div class="body">
+              <div class="top"><h3>Sakura Sushi Bar</h3><span class="rating">4.7 ★</span></div>
+              <div class="menu">Menu: Dragon Roll ($15) • Spicy Ramen ($13)</div>
+              <div class="foot"><span>35–45 mins</span><span style="color:var(--primary)">Order →</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="card-wrap">
+          <article class="card">
+            <div class="banner" style="background: #2e7d32;">🥗<span>HEALTHY PICK</span></div>
+            <div class="body">
+              <div class="top"><h3>Green Bowl Co.</h3><span class="rating">4.5 ★</span></div>
+              <div class="menu">Menu: Quinoa Bowl ($11) • Berry Smoothie ($6)</div>
+              <div class="foot"><span>15–20 mins</span><span style="color:var(--primary)">Order →</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="card-wrap">
+          <article class="card">
+            <div class="banner" style="background: #6a1b9a;">🍰<span>SWEET DEAL</span></div>
+            <div class="body">
+              <div class="top"><h3>Sweet Cravings</h3><span class="rating">4.8 ★</span></div>
+              <div class="menu">Menu: Choco Truffle ($7) • Croissant ($4)</div>
+              <div class="foot"><span>20–30 mins</span><span style="color:var(--primary)">Order →</span></div>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
